@@ -11,10 +11,10 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['Liberation Mono', ...defaultTheme.fontFamily.sans],
             },
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('daisyui')],
+    plugins: [require('@tailwindcss/forms'), require('daisyui'), require('@tailwindcss/typography')],
 };
