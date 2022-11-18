@@ -20,13 +20,7 @@
     </div>
 
     <div class="p-5">
-        <div class="navbar text-neutral-content justify-center">
-            <a class="btn btn-ghost uppercase text-xl">Sport</a>
-            <a class="btn btn-ghost uppercase text-xl">Cruiser</a>
-            <a class="btn btn-ghost uppercase text-xl">Grand American Touring</a>
-            <a class="btn btn-ghost uppercase text-xl">Adventure touring</a>
-            <a class="btn btn-ghost uppercase text-xl">Trike</a>
-        </div>
+        <x-moto.category-list :categories="$categories" />
     </div>
     <!-- SECOND HERO -->
     <div class="hero p-3">
@@ -52,39 +46,9 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="card">
-                    <figure>
-                        <img src="https://www.harley-davidson.com/content/dam/h-d/images/promo-images/2022/1x1/ultra-limited-hero-card-3-up.jpg?impolicy=myresize&rw=650" alt="nouvelle moto" />
-                    </figure>
-                    <div class="card-body">
-                        <h2 class="card-title">Ultra limited</h2>
-                        <p class="card-subtitle">
-                            Pour une expérience touring optimale, la 2022 Ultra Limited arbore un style audacieux et offre des performances de pointe sans aucun compromis sur la conduite.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <figure>
-                        <img src="https://www.harley-davidson.com/content/dam/h-d/images/promo-images/2022/1x1/street-bob-22-hero-card.jpg?impolicy=myresize&rw=650" alt="nouvelle moto" />
-                    </figure>
-                    <div class="card-body">
-                        <h2 class="card-title">Street bob 114</h2>
-                        <p class="card-subtitle">
-                            Un Bobber brut et épuré, tout de noir vêtu.La 2022 Street Bob 114 offre une toile parfaite pour la customisation.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <figure>
-                        <img src="https://www.harley-davidson.com/content/dam/h-d/images/promo-images/2022/1x1/nightster-hero-card-3-up.jpg?impolicy=myresize&rw=650" alt="nouvelle moto" />
-                    </figure>
-                    <div class="card-body">
-                        <h2 class="card-title">Nightster</h2>
-                        <p class="card-subtitle">
-                            Nouveauté de 2022, la Nightster est une machine née d’une icône d’hier améliorée pour les pilotes d’aujourd’hui. Elle associe la silhouette classique de la Sportster à la puissance du moteur Revolution Max.
-                        </p>
-                    </div>
-                </div>
+                @foreach($motos as $moto)
+                    <x-moto.moto-card :moto="$moto" />
+                @endforeach
             </div>
         </div>
     </div>

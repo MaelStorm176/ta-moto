@@ -15,24 +15,21 @@
     </head>
     <body>
         <header>
-            <div class="navbar bg-base-100">
-                <div class="navbar-start">
-                    <div class="dropdown">
-                        <label tabindex="0" class="btn btn-ghost btn-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
-                        </label>
-                        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><a>Homepage</a></li>
-                            <li><a>Portfolio</a></li>
-                            <li><a>About</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="navbar-center">
-                    <svg id="logo-38" width="78" height="32" viewBox="0 0 78 32" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M55.5 0H77.5L58.5 32H36.5L55.5 0Z" class="ccustom" fill="#FF7A00"></path> <path d="M35.5 0H51.5L32.5 32H16.5L35.5 0Z" class="ccompli1" fill="#FF9736"></path> <path d="M19.5 0H31.5L12.5 32H0.5L19.5 0Z" class="ccompli2" fill="#FFBC7D"></path> </svg>
+            <x-navbar.navbar>
+                <x-slot:start>
+                    <x-navbar.dropdown>
+                        <x-navbar.item url="{{ route('home') }}" label="Home" />
+                        <x-navbar.item url="/about" label="About" />
+                        <x-navbar.item url="/contact" label="Contact" />
+                    </x-navbar.dropdown>
+                </x-slot:start>
+
+                <x-slot:center>
+                    <x-application-logo class="w-20 h-20 fill-current" />
                     <a class="btn btn-ghost normal-case text-xl">Ta moto</a>
-                </div>
-                <div class="navbar-end">
+                </x-slot:center>
+
+                <x-slot:end>
                     <button class="btn btn-ghost btn-circle">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
@@ -42,11 +39,14 @@
                             <span class="badge badge-xs badge-primary indicator-item"></span>
                         </div>
                     </button>
-                </div>
-            </div>
-            <div class="bg-secondary h-7 flex flex-row justify-center items-center">
-                <p>Livraison gratuite à partir de 2 500€ d'achat <a class="link-primary">Plus de détails</a></p>
-            </div>
+                </x-slot:end>
+            </x-navbar.navbar>
+
+            <x-navbar.alert>
+                <p>Livraison gratuite à partir de 2 500€ d'achat
+                    <a class="link-primary">Plus de détails</a>
+                </p>
+            </x-navbar.alert>
         </header>
 
         <main class="font-sans antialiased">

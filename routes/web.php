@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ShopController;
+use App\Models\Motorbike;
+use App\Models\MotorbikeCategory;
 use Illuminate\Support\Facades\Route;
 use TCG\Voyager\Facades\Voyager;
 
@@ -19,8 +22,13 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return view('home');
-});
+    $categories = MotorbikeCategory::all();
+    $motos = Motorbike::where('price', '>', 0)
+        ->orderBy('price', 'asc')
+        ->limit(3)
+        ->get();
+    return view('home', compact('categories', 'motos'));
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,6 +36,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+Route::resource('shop', ShopController::class);
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
