@@ -36,7 +36,10 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('shop', ShopController::class);
+Route::group(['prefix' => 'shop'], function () {
+    Route::get('/', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/{slug}', [ShopController::class, 'show'])->name('shop.show');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

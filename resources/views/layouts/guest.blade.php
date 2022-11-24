@@ -5,7 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <!-- SEO -->
+        <meta name="description" content="{{ setting('site.description') }}">
+        <meta name="keywords" content="moto, vente, en ligne, occasion, neuve">
+        <meta name="author" content="Ta moto">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow">
+        <meta name="google" content="nositelinkssearchbox">
+        <meta name="google" content="notranslate">
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ setting('site.logo') }}">
+
+        <title>{{ setting('site.title') }}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -53,4 +65,34 @@
             {{ $slot }}
         </main>
     </body>
+
+    <footer class="footer p-10 bg-base-200 text-base-content">
+        <div>
+            <div class="flex items-center">
+                <x-application-logo class="w-20 h-20 fill-current " />
+                <h2 class="text-2xl ml-1 font-bold inline-block">Ta moto</h2>
+            </div>
+            <p>TAMOTO Industries Ltd.<br/>Spécialiste de la vente de moto en ligne depuis 1992</p>
+        </div>
+        <div>
+            <span class="footer-title">Services</span>
+            <a class="link link-hover">Branding</a>
+            <a class="link link-hover">Design</a>
+            <a class="link link-hover">Marketing</a>
+            <a class="link link-hover">Advertisement</a>
+        </div>
+        <div>
+            <span class="footer-title">Company</span>
+            <a class="link link-hover">About us</a>
+            <a class="link link-hover">Contact</a>
+            <a class="link link-hover">Jobs</a>
+            <a class="link link-hover">Press kit</a>
+        </div>
+        <div>
+            <span class="footer-title">Legal</span>
+            <a class="link link-hover">Terms of use</a>
+            <a class="link link-hover">Privacy policy</a>
+            <a class="link link-hover">Cookie policy</a>
+        </div>
+    </footer>
 </html>

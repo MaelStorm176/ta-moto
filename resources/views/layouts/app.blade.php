@@ -4,8 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- SEO -->
+        <meta name="description" content="{{ setting('site.description') }}">
+        <meta name="keywords" content="moto, vente, en ligne, occasion, neuve">
+        <meta name="author" content="Ta moto">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow">
+        <meta name="google" content="nositelinkssearchbox">
+        <meta name="google" content="notranslate">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ setting('site.title') }}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
