@@ -38,7 +38,8 @@ require __DIR__.'/auth.php';
 
 Route::group(['prefix' => 'shop'], function () {
     Route::get('/', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/{slug}', [ShopController::class, 'show'])->name('shop.show');
+    Route::get('/motos/{motorbike}', [ShopController::class, 'show'])->name('shop.show');
+    Route::get('/categories/{category}', [ShopController::class, 'showCategory'])->name('shop.showCategory');
 });
 
 Route::group(['prefix' => 'admin'], function () {

@@ -1,6 +1,8 @@
 <div class="card group">
     <figure>
-        <img src="{{ asset('storage/'.$moto->image) }}" alt="{{ $moto->name }}"/>
+        <a href="{{ route('shop.show',$moto) }}">
+            <img src="{{ asset('storage/'.$moto->image) }}" alt="{{ $moto->name }}" class="card-image">
+        </a>
     </figure>
     <div class="card-body">
         <h2 class="card-title">{{ $moto->name }}</h2>
