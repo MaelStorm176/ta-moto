@@ -20,8 +20,9 @@ class ShopController extends Controller
 
     public function show(Motorbike $motorbike)
     {
-        $relatedMotorbikes = Motorbike::where('category', $motorbike->category)
-            ->where('id', '!=', $motorbike->id)
+        //dd($motorbike->category()->first());
+        $relatedMotorbikes = Motorbike::where('category', $motorbike->getAttribute('category'))
+            ->where('id', '!=', $motorbike->getAttribute('id'))
             ->limit(3)
             ->get();
         return view('shop.show', compact('motorbike', 'relatedMotorbikes'));
