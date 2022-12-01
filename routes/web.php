@@ -23,10 +23,7 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     $categories = MotorbikeCategory::all();
-    $motos = Motorbike::where('price', '>', 0)
-        ->orderBy('price', 'asc')
-        ->limit(3)
-        ->get();
+    $motos = Motorbike::inRandomOrder()->limit(3)->get();
     return view('home', compact('categories', 'motos'));
 })->name('home');
 

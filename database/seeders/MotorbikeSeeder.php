@@ -16,6 +16,10 @@ class MotorbikeSeeder extends Seeder
      */
     public function run(): void
     {
-        Motorbike::factory()->count(30)->create();
+        $categories = MotorbikeCategory::all();
+        Motorbike::factory()->count(30)->create()->each(function ($motorbike) use ($categories) {
+            $motorbike->category()->associate($categories->random());
+            $motorbike->save();
+        });
     }
 }

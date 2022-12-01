@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class MotorbikeFactory extends Factory
 {
     protected $model = Motorbike::class;
-    protected $motorbikeFakeName = [
+    protected array $motorbikeFakeName = [
         'Nightsky',
         'Sunset',
         'Sunrise',
@@ -53,10 +53,9 @@ class MotorbikeFactory extends Factory
         // select random image
         $image = $images[array_rand($images)];
 
-        // TODO: Implement definition() method.
         return [
             'name' => $this->faker->randomElement($this->motorbikeFakeName),
-            'category' => $this->faker->numberBetween(1, 5),
+            'category_id' => $this->faker->numberBetween(1, 5),
             'price' => $this->faker->randomFloat(2, 1000, 10000),
             'fuel' => $this->faker->randomElement(['petrol', 'diesel', 'electric']),
             'cylinder' => $this->faker->numberBetween(50, 200),

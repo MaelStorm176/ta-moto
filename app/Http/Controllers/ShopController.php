@@ -21,7 +21,7 @@ class ShopController extends Controller
     public function show(Motorbike $motorbike)
     {
         //dd($motorbike->category()->first());
-        $relatedMotorbikes = Motorbike::where('category', $motorbike->getAttribute('category'))
+        $relatedMotorbikes = Motorbike::where('category_id', $motorbike->category->id)
             ->where('id', '!=', $motorbike->getAttribute('id'))
             ->limit(3)
             ->get();
@@ -32,7 +32,7 @@ class ShopController extends Controller
     {
         $categories = MotorbikeCategory::all();
         $motorbikes = Motorbike::where('price', '>', 0)
-            ->where('category', $category->id)
+            ->where('category_id', $category->getAttribute('id'))
             ->orderBy('price', 'asc')
             ->limit(50)
             ->get();

@@ -11,8 +11,9 @@ class Motorbike extends Model
 {
     use HasFactory;
 
+    protected $table = 'motorbikes';
     public function category(): BelongsTo
     {
-        return $this->belongsTo(MotorbikeCategory::class, 'category');
+        return $this->belongsTo(MotorbikeCategory::class);
     }
 }

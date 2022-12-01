@@ -8,9 +8,9 @@
 
         <div class="flex flex-col lg:flex-row">
             <div class="w-2/3">
-                <img src="{{ asset('storage/'.$motorbike->image) }}" alt="{{ $motorbike->name }}" class="w-full">
+                <img src="{{ asset('storage/'.$motorbike->image) }}" alt="{{ $motorbike->name }}" class="w-full rounded">
             </div>
-            <div class="divider lg:divider-horizontal">OR</div>
+            <div class="divider lg:divider-horizontal"></div>
             <div class="p-3 flex flex-col justify-between">
                 <h1 class="text-5xl font-bold">{{ $motorbike->name }}</h1>
                 <p class="text-xl">{{ $motorbike->description }}</p>
@@ -24,19 +24,19 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
-        @if($relatedMotorbikes->count() > 0)
-            <div class="mt-10">
-                <div class="divider"><h3 class="text-3xl font-bold">Vous aimerez aussi</h3></div>
-                <div class="flex flex-wrap">
-                    @foreach ($relatedMotorbikes as $moto)
-                        <div class="w-full lg:w-1/3 p-3">
-                            <x-moto.moto-card :moto="$moto" />
-                        </div>
+    @if($relatedMotorbikes->count() > 0)
+        <div class="bg-base-300/50 p-3">
+            <div class="container mx-auto">
+                <h2 class="text-2xl font-bold uppercase p-3">Vous aimerez aussi</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @foreach($relatedMotorbikes as $moto)
+                        <x-moto.moto-card :moto="$moto" />
                     @endforeach
                 </div>
             </div>
-        @endif
-    </div>
+        </div>
+    @endif
 </x-guest-layout>
