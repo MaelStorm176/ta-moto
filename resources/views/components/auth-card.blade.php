@@ -1,9 +1,10 @@
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-    <div>
+<div class="card bg-neutral text-neutral-content lg:card-side shadow-xl">
+    <figure><img src="https://placeimg.com/400/400/arch" alt="Album"/></figure>
+    <div class="card-body">
         {{ $logo }}
-    </div>
-
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
         {{ $slot }}
+        <div class="card-actions justify-end self-end">
+            {{ $actions }}
+        </div>
     </div>
 </div>

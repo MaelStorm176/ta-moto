@@ -1,34 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="halloween">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <!-- SEO -->
-        <meta name="description" content="{{ setting('site.description') }}">
-        <meta name="keywords" content="moto, vente, en ligne, occasion, neuve">
-        <meta name="author" content="Ta moto">
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
-        <meta name="google" content="nositelinkssearchbox">
-        <meta name="google" content="notranslate">
-
-        <!-- Favicon -->
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-
-        <title>{{ setting('site.title') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body>
+    <x-layout.header />
+    <body class="font-sans antialiased">
         <header>
             <x-navbar.navbar>
                 <x-slot:start>
@@ -36,6 +9,7 @@
                         <x-navbar.item url="{{ route('home') }}" label="Home" />
                         <x-navbar.item url="/about" label="About" />
                         <x-navbar.item url="/contact" label="Contact" />
+                        <x-navbar.item url="{{ route('login') }}" label="Connexion" />
                     </x-navbar.dropdown>
                 </x-slot:start>
 
@@ -68,34 +42,5 @@
             {{ $slot }}
         </main>
     </body>
-
-    <footer class="footer p-10 bg-base-200 text-base-content">
-        <div>
-            <div class="flex items-center">
-                <x-application-logo class="w-20 h-20 fill-current " />
-                <h2 class="text-2xl ml-1 font-bold inline-block">Ta moto</h2>
-            </div>
-            <p>TAMOTO Industries Ltd.<br/>Spécialiste de la vente de moto en ligne depuis 1992</p>
-        </div>
-        <div>
-            <span class="footer-title">Services</span>
-            <a class="link link-hover">Branding</a>
-            <a class="link link-hover">Design</a>
-            <a class="link link-hover">Marketing</a>
-            <a class="link link-hover">Advertisement</a>
-        </div>
-        <div>
-            <span class="footer-title">Company</span>
-            <a class="link link-hover">About us</a>
-            <a class="link link-hover">Contact</a>
-            <a class="link link-hover">Jobs</a>
-            <a class="link link-hover">Press kit</a>
-        </div>
-        <div>
-            <span class="footer-title">Legal</span>
-            <a class="link link-hover">Terms of use</a>
-            <a class="link link-hover">Privacy policy</a>
-            <a class="link link-hover">Cookie policy</a>
-        </div>
-    </footer>
+    <x-layout.footer />
 </html>

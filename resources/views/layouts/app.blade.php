@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="halloween">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <!-- SEO -->
-        <meta name="description" content="{{ setting('site.description') }}">
-        <meta name="keywords" content="moto, vente, en ligne, occasion, neuve">
-        <meta name="author" content="Ta moto">
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
-        <meta name="google" content="nositelinkssearchbox">
-        <meta name="google" content="notranslate">
-
-        <title>{{ setting('site.title') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
+    <x-layout.header />
     <body class="font-sans antialiased">
         <header>
             <x-navbar.navbar>
@@ -29,6 +9,11 @@
                         <x-navbar.item url="{{ route('home') }}" label="Home" />
                         <x-navbar.item url="/about" label="About" />
                         <x-navbar.item url="/contact" label="Contact" />
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <x-navbar.item :url="route('logout')" label="{{ __('Log Out') }}" onclick="event.preventDefault();this.closest('form').submit();" />
+                        </form>
                     </x-navbar.dropdown>
                 </x-slot:start>
 
@@ -57,4 +42,5 @@
             </x-navbar.alert>
         </header>
     </body>
+    <x-layout.footer />
 </html>
