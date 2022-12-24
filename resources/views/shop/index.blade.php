@@ -5,7 +5,6 @@
             <div class="max-w-md">
                 <h1 class="mb-5 text-5xl font-bold">Trouve Ta Moto !</h1>
                 <p class="mb-5">L’aventure commence au guidon d’une Harley-Davidson®. Vivez des week-ends héroïques. Partez au travail en lâchant l’adrénaline. Une Harley-Davidson® vous ouvre de nouveaux horizons. La liberté pure. Aussi vastes et réels que dans vos rêves. La liberté pure.</p>
-                <button class="btn btn-primary">Get Started</button>
             </div>
         </div>
     </div>

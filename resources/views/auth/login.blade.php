@@ -31,7 +31,8 @@
                     <x-text-input id="password" class="block mt-1 w-full"
                                     type="password"
                                     name="password"
-                                    required autocomplete="current-password" />
+                                    required
+                                    autocomplete="current-password" />
 
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
@@ -45,17 +46,17 @@
                 </div>
 
 
-                <x-slot name="actions">
+                <div class="card-actions justify-end self-end items-center">
                     @if (Route::has('password.request'))
                         <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                             {{ __('Forgot your password?') }}
                         </a>
                     @endif
 
-                    <x-primary-button class="ml-3">
+                    <x-primary-button class="ml-3" type="submit">
                         {{ __('Log in') }}
                     </x-primary-button>
-                </x-slot>
+                </div>
             </form>
         </x-auth-card>
     </div>

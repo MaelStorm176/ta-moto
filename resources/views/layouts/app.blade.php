@@ -6,9 +6,10 @@
             <x-navbar.navbar>
                 <x-slot:start>
                     <x-navbar.dropdown>
-                        <x-navbar.item url="{{ route('home') }}" label="Home" />
-                        <x-navbar.item url="/about" label="About" />
-                        <x-navbar.item url="/contact" label="Contact" />
+                        <x-navbar.item url="{{ route('home') }}" label="Accueil" />
+                        @if(Auth::user()->role()->first()->name === 'admin')
+                            <x-navbar.item url="{{ route('voyager.login') }}" label="Administration" />
+                        @endif
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -19,7 +20,7 @@
 
                 <x-slot:center>
                     <x-application-logo class="w-20 h-20 fill-current" />
-                    <a class="btn btn-ghost normal-case text-xl">Ta moto</a>
+                    <a class="btn btn-ghost normal-case text-xl" href="{{ route('home') }}">Ta moto</a>
                 </x-slot:center>
 
                 <x-slot:end>
