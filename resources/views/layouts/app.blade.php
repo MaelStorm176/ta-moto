@@ -42,6 +42,11 @@
                 </p>
             </x-navbar.alert>
         </header>
+
+        <main class="font-sans antialiased">
+            {{ $slot }}
+        </main>
+
     </body>
     <x-layout.footer />
 </html>
