@@ -13,6 +13,15 @@ module.exports = {
             fontFamily: {
                 sans: ['Liberation Mono', ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                'spin-slow': 'spin 3s linear infinite',
+                'shine': 'shine 1s ease-in-out',
+            },
+            keyframes: {
+                shine: {
+                    "100%": { left: "100%" }
+                }
+            }
         },
     },
 
