@@ -45,7 +45,6 @@ class MotorbikeCategoryFactory extends Factory
             'name' => $this->faker->unique()->randomElement($this->categoryFakeName),
             'created_at' => now(),
             'updated_at' => now(),
-            'banner_img' => fake()->imageUrl(),
             'slug' => fake()->slug(2),
         ];
     }
