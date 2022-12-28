@@ -44,6 +44,7 @@ Route::group(['prefix' => 'forum', 'middleware' => 'auth'], static function () {
     Route::get('/', [ForumController::class, 'index'])->name('forum.index');
     Route::get('/channels/{channel}', [ForumController::class, 'showChannel'])->name('forum.showChannel');
     Route::get('/channels/{channel}/messages/{message}', [ForumController::class, 'showMessage'])->name('forum.showMessage');
+    Route::post('/channels/{channel}/messages', [ForumController::class, 'addMessage'])->name('forum.addMessage');
 });
 
 Route::group(['prefix' => 'admin'], static function () {

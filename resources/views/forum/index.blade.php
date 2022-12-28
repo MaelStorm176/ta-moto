@@ -9,7 +9,12 @@
         </div>
     </div>
 
-    <div class="container mx-auto">
+    <div class="container mx-auto my-10">
+
+        <div class="flex justify-start p-4">
+            <h3 class="text-4xl font-bold">Liste des sujets</h3>
+        </div>
+
         <div class="overflow-x-auto">
             <table class="table table-zebra w-full">
                 <!-- head -->
@@ -47,6 +52,13 @@
                     </tr>
                 @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="6">
+                            {{ $forums->links() }}
+                        </th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

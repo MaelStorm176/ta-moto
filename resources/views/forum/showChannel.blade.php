@@ -1,5 +1,10 @@
 <x-app-layout>
 
+    <!-- retour aux forums -->
+    <div class="flex justify-start p-4">
+        <a href="{{ route('forum.index') }}" class="btn btn-primary">Retour au forum</a>
+    </div>
+
     <div class="flex items-center min-h-screen justify-center">
         <x-auth-card>
             <x-slot name="logo">
@@ -14,7 +19,7 @@
                 <div class="chat chat-start bg-neutral ">
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
-                            <img src="https://placeimg.com/192/192/people" alt="profile_picture"/>
+                            <img src="{{ asset("storage/".$message->user->avatar) }}" alt="profile_picture"/>
                         </div>
                     </div>
                     <div class="chat-header">
@@ -27,14 +32,17 @@
             @endforeach
             </div>
 
-            <div class="card-actions place-items-end w-full">
-                <div class="form-control w-[20rem]">
-                    <x-input-label for="message" :value="__('Message')" />
-                    <x-text-input id="message" class="block mt-1 max-w-xl" type="text" name="message" :value="old('message')" required autofocus />
-                </div>
-                <x-primary-button class="ml-3" type="submit">
-                    Envoyer
-                </x-primary-button>
+            <div class="card-actions">
+                <form action="{{ route('forum.addMessage',[$channel]) }}" method="post" class="flex w-full place-items-end">
+                    @csrf
+                    <div class="form-control w-[20rem]">
+                        <x-input-label for="message" :value="__('Message')" />
+                        <x-text-input id="message" class="block mt-1 max-w-xl" type="text" name="message" :value="old('message')" required autofocus />
+                    </div>
+                    <x-primary-button class="ml-3" type="submit">
+                        Envoyer
+                    </x-primary-button>
+                </form>
             </div>
 
         </x-auth-card>
