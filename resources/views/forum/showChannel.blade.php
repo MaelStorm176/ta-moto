@@ -44,7 +44,10 @@
                     </x-primary-button>
                 </form>
             </div>
-
         </x-auth-card>
     </div>
+
+    @section('scripts')
+        @vite('resources/js/forum/showChannel.js')
+    @endsection
 </x-app-layout>

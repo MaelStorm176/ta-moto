@@ -32,4 +32,7 @@ window.Echo = new Echo({
     forceTLS: false,
     enabledTransports: ['ws', 'wss'],
     disableStats: true,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
 });
+
+console.log('bootstrap.js loaded');

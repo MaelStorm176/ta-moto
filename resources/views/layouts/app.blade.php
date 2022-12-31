@@ -49,5 +49,4 @@
 
     </body>
     <x-layout.footer />
-
 </html>

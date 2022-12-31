@@ -14,7 +14,7 @@ class ForumChannelMessage extends Model
     use SoftDeletes;
     protected $table = 'forum_channel_messages';
     protected $fillable = ['message', 'channel_id', 'created_by'];
-
+    protected $with = ['user'];
     public function save(array $options = []): bool
     {
         if (auth()->check()) {
@@ -32,4 +32,5 @@ class ForumChannelMessage extends Model
     {
         return $this->belongsTo(ForumChannel::class, 'channel_id');
     }
+
 }

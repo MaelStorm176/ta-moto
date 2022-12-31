@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ForumChannelMessagePosted;
 use App\Models\ForumChannel;
 use Illuminate\Http\Request;
 
@@ -20,12 +21,12 @@ class ForumController extends Controller
 
     public function addMessage(Request $request, ForumChannel $channel)
     {
-        $channel->messages()->create([
+        $message = $channel->messages()->create([
             'user_id' => auth()->id(),
             'message' => $request->message
         ]);
 
-        $broadcast = broadcast(new MessagePosted($channel, $message))->toOthers();
+        $broadcast = broadcast(new ForumChannelMessagePosted($message))->toOthers();
 
         return back();
     }
