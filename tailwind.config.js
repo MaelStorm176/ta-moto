@@ -15,11 +15,11 @@ module.exports = {
             },
             animation: {
                 'spin-slow': 'spin 3s linear infinite',
-                'shine': 'shine 1s ease-in-out',
+                'shine': 'shine 1s',
             },
             keyframes: {
                 shine: {
-                    "100%": { left: "100%" }
+                    "100%": { left: "125%" }
                 }
             }
         },

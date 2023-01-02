@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <div class="hero" style="background-image: url(https://www.harley-davidson.com/content/dam/h-d/images/category-images/2022/short-hero/2022-sport-category-short-hero-image.jpg?impolicy=myresize&rw=1060);">
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content text-center text-neutral-content">
@@ -21,4 +21,4 @@
             @endforeach
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>

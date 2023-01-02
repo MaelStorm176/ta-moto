@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
 
     <!-- HERO -->
     <div class="hero bg-base-300/100 p-3">
@@ -52,4 +52,4 @@
             </div>
         </div>
     </div>
-</x-guest-layout>
+</x-app-layout>

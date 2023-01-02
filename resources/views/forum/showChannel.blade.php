@@ -2,7 +2,12 @@
 
     <!-- retour aux forums -->
     <div class="flex justify-start p-4">
-        <a href="{{ route('forum.index') }}" class="btn btn-primary">Retour au forum</a>
+        <div class="text-sm breadcrumbs">
+            <ul>
+                <li><a href="{{ route('forum.index') }}">Forum</a></li>
+                <li><a href="{{ route('forum.showChannel', $channel->id) }}">{{ $channel->title }}</a></li>
+            </ul>
+        </div>
     </div>
 
     <div class="flex items-center min-h-screen justify-center">
@@ -12,9 +17,19 @@
                     <x-application-logo class="w-10 h-10 fill-current text-gray-500" />
                     {{ $channel->title }}
                 </a>
+                <!-- Number of users online -->
+                <div
+                    class="text-sm text-gray-500"
+                    x-data="{ users: [] }"
+                    @channel-user-init.window="users = $event.detail"
+                    @channel-user-joined.window="users.push($event.detail)"
+                    @channel-user-left.window="users = users.filter(user => user.id !== $event.detail.id)"
+                >
+                    <span x-text="users.length"></span>/{{ $channel->max_users }} utilisateurs connectés
+                </div>
             </x-slot>
 
-            <div class="h-full max-h-[375px] max-w-3xl overflow-y-scroll flex-wrap scrollbar scrollbar-thumb-primary scrollbar-track-neutral scrollbar-thin">
+            <div id="messages" class="h-full max-h-[375px] max-w-3xl overflow-y-scroll flex-wrap scrollbar scrollbar-thumb-primary scrollbar-track-neutral scrollbar-thin">
             @foreach($channel->messages as $message)
                 <div class="chat chat-start bg-neutral ">
                     <div class="chat-image avatar">

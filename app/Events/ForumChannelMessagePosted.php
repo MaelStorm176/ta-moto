@@ -30,10 +30,10 @@ class ForumChannelMessagePosted implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return Channel|PrivateChannel|array
+     * @return PresenceChannel
      */
-    public function broadcastOn(): Channel|PrivateChannel|array
+    public function broadcastOn(): PresenceChannel
     {
-        return new PrivateChannel('ForumChannel.' . $this->message->channel_id);
+        return new PresenceChannel('ForumChannel.' . $this->message->channel_id);
     }
 }

@@ -19,12 +19,15 @@ class ForumChannelMessageFactory extends Factory
      */
     public function definition(): array
     {
+        $channel = ForumChannel::all()->random();
+        $created_at = $this->faker->dateTimeBetween($channel->created_at, 'now');
+        $updated_at = $this->faker->dateTimeBetween($created_at, 'now');
         return [
             'message' => $this->faker->paragraph,
-            'channel_id' => ForumChannel::all()->random()->id,
+            'channel_id' => $channel->id,
             'created_by' => User::all()->random()->id,
-            'created_at' => $this->faker->dateTimeBetween('-1 year'),
-            'updated_at' => $this->faker->dateTimeBetween('-1 year'),
+            'created_at' => $created_at,
+            'updated_at' => $updated_at,
         ];
     }
 }

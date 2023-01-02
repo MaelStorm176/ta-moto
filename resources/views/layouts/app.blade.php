@@ -7,14 +7,21 @@
                 <x-slot:start>
                     <x-navbar.dropdown>
                         <x-navbar.item url="{{ route('home') }}" label="Accueil" />
-                        @if(Auth::user()->role()->first()->name === 'admin')
-                            <x-navbar.item url="{{ route('voyager.login') }}" label="Administration" />
-                        @endif
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-navbar.item :url="route('logout')" label="{{ __('Log Out') }}" onclick="event.preventDefault();this.closest('form').submit();" />
-                        </form>
+                        @auth
+                            @can('browse_admin')
+                                <x-navbar.item url="{{ route('voyager.login') }}" label="Administration" />
+                            @endcan
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-navbar.item :url="route('logout')" label="{{ __('Log Out') }}" onclick="event.preventDefault();this.closest('form').submit();" />
+                            </form>
+                            <x-navbar.item url="{{ route('forum.index') }}" label="Le Forum" />
+                        @endauth
+                        @guest
+                            <x-navbar.item url="{{ route('login') }}" label="Connexion" />
+                            <x-navbar.item url="{{ route('register') }}" label="Inscription" />
+                        @endguest
                     </x-navbar.dropdown>
                 </x-slot:start>
 

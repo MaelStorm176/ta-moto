@@ -59,6 +59,8 @@ class MotorbikeFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1000, 10000),
             'fuel' => $this->faker->randomElement(['petrol', 'diesel', 'electric']),
             'cylinder' => $this->faker->numberBetween(50, 200),
+            'power' => $this->faker->numberBetween(50, 200),
+            'year' => $this->faker->year,
             'description' => $this->faker->text,
             'image' => "motorbikes/November2022/".$image,
         ];

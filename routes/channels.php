@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ForumChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -17,6 +18,9 @@ Broadcast::channel('App.Models.User.{id}', static function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('ForumChannel.{channel}', static function ($user) {
-    return true;
+Broadcast::channel('ForumChannel.{channel}', static function ($user, ForumChannel $channel) {
+    return [
+        'id' => $user->id,
+        'name' => $user->name,
+    ];
 });
