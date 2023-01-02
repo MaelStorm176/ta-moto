@@ -11,10 +11,7 @@ class ForumController extends Controller
 {
     public function index(Request $request)
     {
-        $request->validate([
-            'search' => 'string',
-        ]);
-        $forums = $request->whenHas('search', function ($search) {
+        $forums = $request->whenFilled('search', function ($search) {
             return ForumChannel::where('title', 'like', "%{$search}%")->orderBy('created_at', 'desc')->paginate(10);
         }, function () {
             return ForumChannel::orderBy('created_at', 'desc')->paginate(10);
@@ -34,7 +31,7 @@ class ForumController extends Controller
             'message' => $request->message
         ]);
 
-        $broadcast = broadcast(new ForumChannelMessagePosted($message))->toOthers();
+        broadcast(new ForumChannelMessagePosted($message))->toOthers();
 
         return back();
     }

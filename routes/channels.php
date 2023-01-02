@@ -22,5 +22,7 @@ Broadcast::channel('ForumChannel.{channel}', static function ($user, ForumChanne
     return [
         'id' => $user->id,
         'name' => $user->name,
+        'avatar' => $user->avatar,
+        'is_admin' => $user->role->id === 1,
     ];
 });

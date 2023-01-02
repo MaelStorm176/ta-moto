@@ -1,7 +1,7 @@
 const channel_id = getChannelId();
 
-const messages = document.getElementById('messages');
-messages.scrollTop = messages.scrollHeight;
+const messages_div = document.getElementById('messages');
+messages_div.scrollTop = messages_div.scrollHeight;
 
 Echo.join(`ForumChannel.${channel_id}`)
     .here((current_users) => {
@@ -15,7 +15,7 @@ Echo.join(`ForumChannel.${channel_id}`)
     })
     .listen('ForumChannelMessagePosted', (e) => {
         const message = e.message;
-        console.log('message', message);
+        window.dispatchEvent(new CustomEvent('channel-message-posted', { detail: message }));
     })
 ;
 
