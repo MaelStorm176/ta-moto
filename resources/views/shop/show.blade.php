@@ -1,4 +1,15 @@
-<x-guest-layout>
+<x-app-layout>
+
+    <!-- retour aux forums -->
+    <div class="flex justify-start p-4">
+        <div class="text-sm breadcrumbs">
+            <ul>
+                <li><a href="{{ route('shop.showCategory', $motorbike->category()->first()->id) }}">{{ $motorbike->category()->first()->name }}</a></li>
+                <li><a href="{{ route('shop.show', $motorbike->id) }}">{{ $motorbike->name }}</a></li>
+            </ul>
+        </div>
+    </div>
+
     <!-- Show the moto article -->
     <div class="container mx-auto">
         <div class="flex items-center">
@@ -26,6 +37,30 @@
         </div>
     </div>
 
+    <div class="container mx-auto p-3">
+        <h2 class="text-2xl font-bold uppercase p-3">Informations supplémentaires</h2>
+        <table class="table w-full">
+            <thead>
+                <tr>
+                    <th>Année</th>
+                    <th>Carburant</th>
+                    <th>Cylindrée</th>
+                    <th>Puissance</th>
+                    <th>Poids</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $motorbike->year }}</td>
+                    <td>{{ trans($motorbike->fuel) }}</td>
+                    <td>{{ $motorbike->cylinder }} cm3</td>
+                    <td>{{ $motorbike->power }} ch</td>
+                    <td>10kg</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 
     @if($relatedMotorbikes->count() > 0)
         <div class="bg-base-300/50 p-3">
@@ -39,4 +74,4 @@
             </div>
         </div>
     @endif
-</x-guest-layout>
+</x-app-layout>

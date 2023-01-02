@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <div class="flex items-center min-h-screen justify-center">
         <x-auth-card>
             <x-slot name="logo">
@@ -65,4 +65,4 @@
             </form>
         </x-auth-card>
     </div>
-</x-guest-layout>
+</x-app-layout>
