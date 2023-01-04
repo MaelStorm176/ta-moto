@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\ForumChannelMessagePosted;
 use App\Models\ForumChannel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -24,14 +25,25 @@ class ForumController extends Controller
         return view('forum.showChannel', compact('channel'));
     }
 
-    public function addMessage(Request $request, ForumChannel $channel): RedirectResponse
+    public function addMessage(Request $request, ForumChannel $channel): RedirectResponse|JsonResponse
     {
+        $request->validate([
+            'message' => 'required|string|min:3|max:1000',
+        ]);
         $message = $channel->messages()->create([
             'user_id' => auth()->id(),
-            'message' => $request->message
+            'message' => $request->get('message')
         ]);
+        broadcast(new ForumChannelMessagePosted($message));
 
-        broadcast(new ForumChannelMessagePosted($message))->toOthers();
+        //test if ajax request
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Message posted successfully',
+                'data' => $message
+            ]);
+        }
 
         return back();
     }
