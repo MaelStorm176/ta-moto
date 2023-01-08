@@ -1,5 +1,10 @@
 const channel_id = getChannelId();
 
+document.addEventListener('alpine:init', () => {
+    Alpine.data('messageForm', messageForm);
+    initialize_communication();
+});
+
 const messageForm = () => {
     return {
         data: {
@@ -39,10 +44,5 @@ const initialize_communication = () => {
 function getChannelId() {
     return window.location.pathname.split('/')[3];
 }
-
-document.addEventListener('alpine:init', () => {
-    Alpine.data('messageForm', messageForm);
-    initialize_communication();
-});
 
 console.log('showChannel.js loaded');

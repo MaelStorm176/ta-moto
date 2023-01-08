@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ShopController;
 use App\Models\Motorbike;
 use App\Models\MotorbikeCategory;
@@ -45,6 +46,10 @@ Route::group(['prefix' => 'forum', 'middleware' => 'auth'], static function () {
     Route::get('/channels/{channel}', [ForumController::class, 'showChannel'])->name('forum.showChannel');
     Route::get('/channels/{channel}/messages/{message}', [ForumController::class, 'showMessage'])->name('forum.showMessage');
     Route::post('/channels/{channel}/messages', [ForumController::class, 'addMessage'])->name('forum.addMessage');
+});
+
+Route::group(['prefix' => 'notifications', 'middleware' => 'auth'], static function () {
+    Route::get('/stream', [NotificationController::class, 'stream'])->name('notifications.stream');
 });
 
 Route::group(['prefix' => 'admin'], static function () {

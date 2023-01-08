@@ -37,11 +37,12 @@
                         href="#"
                         class="flex items-center p-2 space-x-2 rounded-box hover:bg-base-200"
                     >
-                        <img
-                            :src="`/storage/${user.avatar}`"
-                            alt="profile_picture"
-                            class="avatar h-10 w-10"
-                        >
+                        <div class="avatar online">
+                            <div class="w-10 rounded-full">
+                                <img :src="`/storage/${user.avatar}`" alt="profile_picture">
+                            </div>
+                        </div>
+
                         <span x-text="user.name"></span>
                         <template x-if="user.is_admin">
                             <span class="badge badge-primary justify-self-end">Admin</span>
