@@ -54,7 +54,7 @@
             {{ $slot }}
         </main>
 
-        <div id="bot-container" class="m-5 fixed bottom-0 left-0 right-0 z-50">
+        <div id="bot-container" class="m-5 fixed bottom-0 right-0 z-50">
             <div id="bot-inner">
                 <div id="bot"></div>
             </div>
