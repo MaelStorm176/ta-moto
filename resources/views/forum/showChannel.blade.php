@@ -14,7 +14,7 @@
 
 
     <div
-        class="flex items-center min-h-screen"
+        class="md:flex md:items-center min-h-screen sm:flex-col sm:justify-center sm:pt-6"
         x-data="{ users: [] }"
         @channel-user-init.window="users = $event.detail"
         @channel-user-joined.window="users.push($event.detail)"
@@ -37,14 +37,15 @@
                         href="#"
                         class="flex items-center p-2 space-x-2 rounded-box hover:bg-base-200"
                     >
-                        <img
-                            :src="`/storage/${user.avatar}`"
-                            alt="profile_picture"
-                            class="avatar h-10 w-10"
-                        >
+                        <div class="avatar online">
+                            <div class="w-10 rounded-full">
+                                <img :src="`/storage/${user.avatar}`" alt="profile_picture">
+                            </div>
+                        </div>
+
                         <span x-text="user.name"></span>
                         <template x-if="user.is_admin">
-                            <span class="badge badge-primary place-self-end">Admin</span>
+                            <span class="badge badge-primary justify-self-end">Admin</span>
                         </template>
                     </a>
                 </li>
@@ -61,12 +62,14 @@
 
             <div
                 id="messages"
-                class="h-full max-h-[375px] max-w-3xl overflow-y-scroll flex-wrap scrollbar scrollbar-thumb-primary scrollbar-track-neutral scrollbar-thin"
+                class="h-full max-h-[350px] max-w-3xl overflow-y-scroll flex-wrap scrollbar scrollbar-thumb-primary scrollbar-track-neutral scrollbar-thin"
                 x-data="{{ Js::from(["messages" => $channel->messages]) }}"
+                x-init="$nextTick(() => $el.scrollTo(0, $el.scrollHeight))"
                 @channel-message-posted.window="
                     messages.push($event.detail);
-                    $nextTick(() => $el.scrollTop = $el.scrollHeight);
+                    $nextTick(() => $el.scrollTo(0, $el.scrollHeight));
                 "
+
             >
                 <template x-if="messages.length > 0">
                     <template
@@ -91,11 +94,16 @@
             </div>
 
             <div class="card-actions">
-                <form action="{{ route('forum.addMessage',[$channel]) }}" method="post" class="flex w-full place-items-end">
-                    @csrf
+                <form
+                    action="{{ route('forum.addMessage',[$channel]) }}"
+                    method="post"
+                    class="flex w-full place-items-end"
+                    x-data="messageForm"
+                    @submit.prevent="submit"
+                >
                     <div class="form-control w-[20rem]">
                         <x-input-label for="message" :value="__('Message')" />
-                        <x-text-input id="message" class="block mt-1 max-w-xl" type="text" name="message" :value="old('message')" required autofocus />
+                        <x-text-input x-model="data.message" id="message" class="block mt-1 max-w-xl" type="text" name="message" :value="old('message')" required autofocus />
                     </div>
                     <x-primary-button class="ml-3" type="submit">
                         Envoyer

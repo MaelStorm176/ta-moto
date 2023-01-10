@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/chatbot/main.css', 'resources/js/app.js', 'resources/js/chatbot/main.js'])
+
+    @auth
+        @vite('resources/js/notification/get_notifications.js')
+    @endauth
+
     @yield('scripts')
+    @vite('resources/js/alpine.js')
 </head>

@@ -16,12 +16,18 @@
         </div>
 
         <!-- Searchbar to filter the list of topics -->
-        <div class="flex justify-start py-4 items-center">
-            <form action="#" method="get">
-                <input type="text" class="input bg-neutral" placeholder="Rechercher un sujet" name="search" value="{{ request('search') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+        <div class="py-4">
+            <form action="#" method="get" class="flex justify-start items-center justify-between">
+                <div>
+                    <input type="text" class="input bg-neutral" placeholder="Rechercher un sujet" name="search" value="{{ request('search') }}">
+                </div>
+                <div class="form-control w-52">
+                    <label class="cursor-pointer label">
+                        <span class="label-text">Deja rejoins</span>
+                        <input type="checkbox" class="toggle toggle-primary" name="joined" id="joined" {{ request('joined') ? 'checked' : '' }}>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary ml-2">Rechercher</button>
             </form>
         </div>
 
@@ -43,13 +49,13 @@
                 @foreach($forums as $forum)
                     <tr>
                         <td>
-                            <a href="{{ route('forum.showChannel', $forum) }}" class="btn btn-primary">Voir</a>
+                            <a href="{{ route('forum.showChannel', $forum) }}" class="btn btn-primary">Rejoindre</a>
                         </td>
                         <td>
                             <a href="{{ route('forum.showChannel', $forum) }}">{{ $forum->title }}</a>
                         </td>
                         <td>
-                            4/{{ $forum->max_users }}
+                            {{ $forum->users()->count() }}/{{ $forum->max_users }}
                         </td>
                         <td>
                             {{ $forum->user->name }}
