@@ -25,6 +25,11 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/css/chatbot/main.css', 'resources/js/app.js', 'resources/js/chatbot/main.js'])
+
+    @auth
+        @vite('resources/js/notification/get_notifications.js')
+    @endauth
+
     @yield('scripts')
     @vite('resources/js/alpine.js')
 </head>

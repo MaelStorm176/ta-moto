@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
@@ -13,4 +14,9 @@ class Notification extends Model
         'title',
         'content',
     ];
+
+    public function readers(): HasMany
+    {
+        return $this->hasMany(NotificationRead::class);
+    }
 }

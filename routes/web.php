@@ -50,6 +50,7 @@ Route::group(['prefix' => 'forum', 'middleware' => 'auth'], static function () {
 
 Route::group(['prefix' => 'notifications', 'middleware' => 'auth'], static function () {
     Route::get('/stream', [NotificationController::class, 'stream'])->name('notifications.stream');
+    Route::post('{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
 });
 
 Route::group(['prefix' => 'admin'], static function () {
