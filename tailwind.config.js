@@ -19,7 +19,7 @@ module.exports = {
             },
             keyframes: {
                 shine: {
-                    "100%": { left: "125%" }
+                    "100%": { left: "125%" },
                 }
             }
         },

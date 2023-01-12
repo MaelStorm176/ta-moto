@@ -11,7 +11,7 @@
 
             <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off" role="form" >
                 @csrf
-                <div class="grid md:grid-cols-2 gap-20 sm:grid-cols-1">
+                <div class="grid md:grid-cols-2 gap-20 sm:grid-cols-1 mb-5">
                     <div class="flex flex-col justify-between">
                         <div class="form-control w-full">
                             <label class="label" for="username">
@@ -38,7 +38,7 @@
                         <button type="submit" class="btn btn-primary mt-4 float-right">Enregistrer</button>
                     </div>
 
-                    <div>
+                    <div class="flex flex-col items-center justify-center">
                         <div class="avatar">
                             <div class="w-64 rounded-full">
                                 <img src="{{ asset('storage/'.Auth::user()->getAttribute('avatar')) }}" alt="avatar" class="w-64 h-64 rounded-full mx-auto">
@@ -63,5 +63,12 @@
                 <x-forum.forum-table :forums="$forums" />
             </div>
         </div>
+
+
+        <div class="h-full group flex justify-center items-center relative overflow-hidden">
+            <h2>Hover over me</h2>
+            <div class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-shine" />
+        </div>
+
     </div>
 </x-app-layout>
