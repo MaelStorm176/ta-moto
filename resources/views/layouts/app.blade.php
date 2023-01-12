@@ -8,6 +8,7 @@
                     <x-navbar.dropdown>
                         <x-navbar.item url="{{ route('home') }}" label="Accueil" />
                         @auth
+                            <x-navbar.item url="{{ route('profile') }}" label="Mon profil" />
                             @can('browse_admin')
                                 <x-navbar.item url="{{ route('voyager.login') }}" label="Administration" />
                             @endcan
@@ -115,6 +116,16 @@
             </template>
         </div>
         @endauth
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
     </body>
     <x-layout.footer />
