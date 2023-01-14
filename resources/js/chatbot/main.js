@@ -255,9 +255,9 @@ const bot = function () {
         printResponse(chat[1]);
     }
     const init = function () {
-        container.addEventListener('click', handleChoice);
-        startConversation();
+        //container.addEventListener('click', handleChoice);
+        //startConversation();
     };
-    init();
+    //init();
 }
 bot();

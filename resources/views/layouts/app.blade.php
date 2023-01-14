@@ -86,17 +86,116 @@
             {{ $slot }}
         </main>
 
-        <div id="bot-container" class="m-5 fixed bottom-0 right-0 z-50">
-            <div id="bot-inner">
-                <div id="bot"></div>
+
+        <div
+            x-data="{
+                open: false,
+                chatbotMessages: [],
+                query: { step: 'start', input: '' },
+                url: '/chatbot/messages?',
+                queryToParams: function() { return Object.keys(this.query).map(key => key + '=' + this.query[key]).join('&'); },
+                getMessages: function() {
+                    fetch(this.url + this.queryToParams(), {method: 'GET', headers: { 'Content-Type': 'application/json' }})
+                    .then(response => response.json())
+                    .then(data => this.chatbotMessages.push(data))
+                    .then(() => this.scrollToBottom())
+                    .catch(error => console.error(error));
+                },
+                scrollToBottom: function() {
+                    this.$refs.bot.scrollTop = this.$refs.bot.scrollHeight;
+                }
+            }"
+            x-init="getMessages()"
+            class="m-5 fixed bottom-0 right-0 z-50">
+                <div
+                    x-show="open"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-90"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-100"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-90"
+                    id="bot-container"
+                    class="bg-neutral"
+                >
+                    <div id="bot-header" class="flex items-center justify-between">
+
+                        <div id="bot-header-img">
+                            <div class="avatar cursor-pointer rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <div class="w-10 rounded-full">
+                                    <img src="{{ asset('chatbot-icon.svg') }}" alt="chatbot"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="bot-header-title">
+                            <h3 class="text-lg font-bold">Chatbot</h3>
+                            <div id="bot-header-title-text">
+                                <span id="bot-header-title-text-status">En ligne</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-ghost btn-circle" @click="open = false">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+
+                    <div class="divider m-0"></div>
+
+                    <div id="bot-inner" x-ref="bot">
+                        <template x-for="chatbotMessage in chatbotMessages">
+                            <div>
+                                <div class="chat chat-start">
+                                    <div class="chat-bubble chat-bubble-primary" x-text="chatbotMessage.message"></div>
+                                </div>
+
+                                <!-- PROPOSITIONS -->
+                                <template x-if="chatbotMessage.type === 'select' && chatbotMessage.options" class="chat chat-end">
+                                    <div class="chat-bubble flex flex-col justify-between justify-center items-center">
+                                        <template x-for="proposition in chatbotMessage.options">
+                                            <button
+                                                class="btn btn-secondary w-full my-2"
+                                                @click="query.step = proposition.next; getMessages()"
+                                            >
+                                                <span x-text="proposition.label"></span>
+                                            </button>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <!-- INPUT -->
+                                <template x-if="chatbotMessage.type === 'input'" class="chat chat-end">
+                                    <div class="chat-bubble flex flex-col justify-between justify-center items-center">
+                                        <input
+                                            class="input input-primary input-bordered w-full"
+                                            type="text"
+                                            x-model="query.input"
+                                            @keydown.enter="query.step = chatbotMessage.next; getMessages(); query.input = ''"
+                                        >
+                                    </div>
+                                </template>
+
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+
+                <div x-show="!open" x-transition:enter.delay.500ms>
+                    <div class="avatar rounded-full ring ring-primary ring-offset-primary ring-offset-2 cursor-pointer" @click="open = true">
+                        <div class="w-24 rounded-full">
+                            <img src="{{ asset('chatbot-icon.svg') }}" alt="chatbot"/>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
         @auth
         <!-- Put this part before </body> tag -->
         <div
             x-data="{ notification: null }"
-            @toggle-modal-notification.window="notification = $event.detail; console.log(notification.id)"
+            @toggle-modal-notification.window="notification = $event.detail;"
         >
             <template x-if="notification">
                 <div class="modal modal-bottom sm:modal-middle modal-open" id="modal-notification">

@@ -4,8 +4,8 @@
     <div class="flex justify-start p-4">
         <div class="text-sm breadcrumbs">
             <ul>
-                <li><a href="{{ route('shop.showCategory', $motorbike->category()->first()->id) }}">{{ $motorbike->category()->first()->name }}</a></li>
-                <li><a href="{{ route('shop.show', $motorbike->id) }}">{{ $motorbike->name }}</a></li>
+                <li><a href="{{ route('shop.showCategory', $motorbike->category()->first()->id) }}" class="capitalize">{{ $motorbike->category()->first()->name }}</a></li>
+                <li><a href="{{ route('shop.show', $motorbike->id) }}" class="capitalize">{{ $motorbike->name }}</a></li>
             </ul>
         </div>
     </div>
