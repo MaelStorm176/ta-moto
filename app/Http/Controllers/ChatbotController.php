@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -49,12 +51,12 @@ class ChatbotController extends Controller
                 ],
                 [
                     'label' => 'Plus d\'un an',
-                    'next' => 'check_disponibility',
+                    'next' => 'check_disponibility_maintenance',
                 ],
             ],
         ],
 
-        'check_disponibility' => [
+        'check_disponibility_maintenance' => [
             'message' => 'Votre moto est éligible à une révision.',
             'type' => 'select',
             'options' => [],
@@ -68,7 +70,7 @@ class ChatbotController extends Controller
                 [
                     'type' => 'less_than',
                     'value' => 10000,
-                    'next' => 'check_disponibility',
+                    'next' => 'check_disponibility_maintenance',
                 ],
                 [
                     'type' => 'more_or_equal',
@@ -84,7 +86,7 @@ class ChatbotController extends Controller
             'options' => [
                 [
                     'label' => 'Oui',
-                    'next' => 'check_disponibility',
+                    'next' => 'check_disponibility_maintenance',
                 ],
                 [
                     'label' => 'Non',
@@ -100,17 +102,35 @@ class ChatbotController extends Controller
             'options' => [
                 [
                     'label' => 'Je souhaite faire de la route',
-                    'next' => 'moto_info_route',
+                    'next' => 'check_disponibility_road',
                 ],
                 [
                     'label' => 'Je souhaite faire du tout-terrain',
-                    'next' => 'moto_info_tt',
+                    'next' => 'check_disponibility_offroad',
                 ],
                 [
                     'label' => 'Je souhaite faire du sport',
-                    'next' => 'moto_info_sport',
+                    'next' => 'check_disponibility_sport',
                 ],
             ],
+        ],
+
+        'check_disponibility_road' => [
+            'message' => 'Voici les créneaux disponibles pour faire de la route :',
+            'type' => 'select',
+            'options' => [],
+        ],
+
+        'check_disponibility_offroad' => [
+            'message' => 'Voici les créneaux disponibles pour faire du tout-terrain :',
+            'type' => 'select',
+            'options' => [],
+        ],
+
+        'check_disponibility_sport' => [
+            'message' => 'Voici les créneaux disponibles pour faire du sport :',
+            'type' => 'select',
+            'options' => [],
         ],
 
 
@@ -158,8 +178,33 @@ class ChatbotController extends Controller
 
         if ($response['type'] === 'input' && !empty($input) && isset($response['condition'])) {
             $index = $this->checkCondition($response['condition'], $input);
-            //dd($response['condition'], $input, $index);
             $response = $this->workflow[$index];
+        }
+
+        if(str_contains($step, 'check_disponibility')){
+            $type = str_replace('check_disponibility_', '', $step);
+            // Get all reservations for the current week
+            $reservations = Reservation::where('type', $type)
+                ->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->get();
+
+            // Generate the options
+            $options = [];
+            while ($options === []){
+                for($i = 0; $i < 7; $i++){
+                    $date = Carbon::now()->addDays($i);
+                    $count = $reservations->where('date', $date->format('Y-m-d'))->count();
+                    if($count === 0){
+                        $options[] = [
+                            'label' => $date->format('d/m/Y'),
+                            'next' => 'end',
+                        ];
+                    }
+                }
+            }
+
+            $response['options'] = $options;
+
         }
 
         return new JsonResponse($response);

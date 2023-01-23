@@ -17,14 +17,14 @@
                             <label class="label" for="username">
                                 <span class="label-text">Nom</span>
                             </label>
-                            <input value="{{ Auth::user()->name }}" name="username" id="username" type="text" placeholder="Type here" class="input input-bordered w-full" />
+                            <input value="{{ Auth::user()->name }}" name="username" id="username" type="text" placeholder="Votre nom d'utilisateur" class="input input-bordered w-full" />
                         </div>
 
                         <div class="form-control w-full">
                             <label class="label" for="email">
                                 <span class="label-text">Adresse Email</span>
                             </label>
-                            <input value="{{ Auth::user()->email }}" name="email" id="email" type="text" placeholder="Type here" class="input input-bordered w-full" />
+                            <input value="{{ Auth::user()->email }}" name="email" id="email" type="text" placeholder="Votre adresse email" class="input input-bordered w-full" />
                         </div>
 
                         <div class="form-control w-full">
@@ -32,7 +32,7 @@
                                 <span class="label-text">Mot de passe</span>
                                 <span class="label-text-alt">Laissez vide pour ne pas changer</span>
                             </label>
-                            <input name="password" id="password" type="text" placeholder="Type here" class="input input-bordered w-full" />
+                            <input name="password" id="password" type="text" placeholder="Votre mot de passe" class="input input-bordered w-full" />
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-4 float-right">Enregistrer</button>
@@ -62,12 +62,6 @@
                 </div>
                 <x-forum.forum-table :forums="$forums" />
             </div>
-        </div>
-
-
-        <div class="h-full group flex justify-center items-center relative overflow-hidden">
-            <h2>Hover over me</h2>
-            <div class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-shine" />
         </div>
 
     </div>

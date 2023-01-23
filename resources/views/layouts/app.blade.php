@@ -60,7 +60,7 @@
                             tabindex="0"
                             class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-base-content max-h-[30rem] overflow-y-auto"
                         >
-                            <template x-for="notification in notifications">
+                            <template x-if="notifications.length > 0" x-for="notification in notifications">
                                 <li>
                                     <a
                                         x-text="notification.title"
@@ -68,6 +68,10 @@
                                     >
                                     </a>
                                 </li>
+                            </template>
+
+                            <template x-if="notifications.length === 0">
+                                <li class="flex items-center">Aucune notification</li>
                             </template>
                         </ul>
                     </div>
@@ -88,24 +92,7 @@
 
 
         <div
-            x-data="{
-                open: false,
-                chatbotMessages: [],
-                query: { step: 'start', input: '' },
-                url: '/chatbot/messages?',
-                queryToParams: function() { return Object.keys(this.query).map(key => key + '=' + this.query[key]).join('&'); },
-                getMessages: function() {
-                    fetch(this.url + this.queryToParams(), {method: 'GET', headers: { 'Content-Type': 'application/json' }})
-                    .then(response => response.json())
-                    .then(data => this.chatbotMessages.push(data))
-                    .then(() => this.scrollToBottom())
-                    .catch(error => console.error(error));
-                },
-                scrollToBottom: function() {
-                    this.$refs.bot.scrollTop = this.$refs.bot.scrollHeight;
-                }
-            }"
-            x-init="getMessages()"
+            x-data="chatbot"
             class="m-5 fixed bottom-0 right-0 z-50">
                 <div
                     x-show="open"
@@ -150,28 +137,35 @@
                                 </div>
 
                                 <!-- PROPOSITIONS -->
-                                <template x-if="chatbotMessage.type === 'select' && chatbotMessage.options" class="chat chat-end">
-                                    <div class="chat-bubble flex flex-col justify-between justify-center items-center">
-                                        <template x-for="proposition in chatbotMessage.options">
-                                            <button
-                                                class="btn btn-secondary w-full my-2"
-                                                @click="query.step = proposition.next; getMessages()"
-                                            >
-                                                <span x-text="proposition.label"></span>
-                                            </button>
-                                        </template>
+                                <template x-if="chatbotMessage.type === 'select' && chatbotMessage.options">
+                                    <div class="chat chat-end">
+                                        <div class="chat-bubble flex flex-col justify-between justify-center items-center">
+                                            <template x-for="proposition in chatbotMessage.options">
+                                                <button
+                                                    class="btn btn-secondary w-full my-2"
+                                                    @click="goNext(proposition.next)"
+                                                >
+                                                    <span x-text="proposition.label"></span>
+                                                </button>
+                                            </template>
+                                        </div>
                                     </div>
                                 </template>
 
                                 <!-- INPUT -->
-                                <template x-if="chatbotMessage.type === 'input'" class="chat chat-end">
-                                    <div class="chat-bubble flex flex-col justify-between justify-center items-center">
-                                        <input
-                                            class="input input-primary input-bordered w-full"
-                                            type="text"
-                                            x-model="query.input"
-                                            @keydown.enter="query.step = chatbotMessage.next; getMessages(); query.input = ''"
-                                        >
+                                <template x-if="chatbotMessage.type === 'input'">
+                                    <div class="chat chat-end">
+                                        <div
+                                            x-data="{ disabled: false }"
+                                            class="chat-bubble flex flex-col justify-between justify-center items-center">
+                                            <input
+                                                class="input input-primary input-bordered w-full"
+                                                type="text"
+                                                x-model="query.input"
+                                                x-bind:disabled="disabled"
+                                                @keydown.enter="goNext(chatbotMessage.next); disabled = true"
+                                            >
+                                        </div>
                                     </div>
                                 </template>
 
@@ -183,7 +177,7 @@
 
                 <div x-show="!open" x-transition:enter.delay.500ms>
                     <div class="avatar rounded-full ring ring-primary ring-offset-primary ring-offset-2 cursor-pointer" @click="open = true">
-                        <div class="w-24 rounded-full">
+                        <div class="w-12 rounded-full">
                             <img src="{{ asset('chatbot-icon.svg') }}" alt="chatbot"/>
                         </div>
                     </div>
@@ -220,7 +214,9 @@
             @foreach($errors->all() as $error)
                 <div class="alert alert-error shadow-lg absolute top-5 left-5 z-50 w-1/3">
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                         <span>{{ $error }}</span>
                     </div>
                 </div>
