@@ -31,5 +31,6 @@
     @endauth
 
     @yield('scripts')
+
     @vite('resources/js/alpine.js')
 </head>

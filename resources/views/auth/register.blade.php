@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="flex items-center min-h-screen justify-center">
-        <x-auth-card>
+        <x-auth-card image="{{ asset('card_images/rider-email.jpeg') }}">
             <x-slot name="logo">
                 <a href="{{ route('home') }}" class="card-title">
                     <x-application-logo class="w-10 h-10 fill-current text-gray-500" />
@@ -53,7 +53,7 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
 
-                <div class="card-actions justify-end self-end items-center">
+                <div class="card-actions justify-end self-end items-center mt-4">
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                         {{ __('Already registered?') }}
                     </a>

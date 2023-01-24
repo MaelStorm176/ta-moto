@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ShopController;
@@ -34,6 +36,13 @@ Route::get('/home', static function () {
 Route::get('/dashboard', static function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/chatbot/messages', [ChatbotController::class, 'messages'])->name('chatbot.messages');
+
+Route::group(['prefix' => 'profile', 'middleware' => 'auth'], static function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/', [ProfileController::class, 'update']);
+});
 
 Route::group(['prefix' => 'shop'], static function () {
     Route::get('/', [ShopController::class, 'index'])->name('shop.index');
