@@ -9,12 +9,14 @@ document.addEventListener('alpine:init', () => {
             fetch(this.url + this.queryToParams(), {method: 'GET', headers: { 'Content-Type': 'application/json' }})
                 .then(response => response.json())
                 .then(data => this.chatbotMessages.push(data))
-                .then(() => this.scrollToBottom())
+                .then(() => {
+                    this.scrollToBottom();
+                    this.query.input = '';
+                })
                 .catch(error => console.error(error));
         },
         goNext: function(step) {
             this.query.step = step;
-            this.query.input = '';
             this.getMessages();
         },
         scrollToBottom: function() {
