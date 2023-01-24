@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="flex items-center min-h-screen justify-center">
-        <x-auth-card>
+        <x-auth-card image="{{ asset('card_images/verify-email.jpg') }}">
             <x-slot name="logo">
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />

@@ -52,7 +52,7 @@
             </template>
         </ul>
         </div>
-        <x-auth-card>
+        <x-auth-card image="{{ asset('card_images/show-channel.jpg') }}">
             <x-slot name="logo">
                 <a href="{{ route('forum.index') }}" class="card-title">
                     <x-application-logo class="w-10 h-10 fill-current text-gray-500" />
@@ -62,7 +62,7 @@
 
             <div
                 id="messages"
-                class="h-full max-h-[350px] max-w-3xl overflow-y-scroll flex-wrap scrollbar scrollbar-thumb-primary scrollbar-track-neutral scrollbar-thin"
+                class="h-full max-h-[600px] max-w-3xl overflow-y-scroll flex-wrap scrollbar scrollbar-thumb-primary scrollbar-track-neutral scrollbar-thin"
                 x-data="{{ Js::from(["messages" => $channel->messages]) }}"
                 x-init="$nextTick(() => $el.scrollTo(0, $el.scrollHeight))"
                 @channel-message-posted.window="
