@@ -131,7 +131,7 @@
 
                     <div id="bot-inner" x-ref="bot">
                         <template x-for="chatbotMessage in chatbotMessages">
-                            <div>
+                            <div x-data="{ disabled: false }">
                                 <div class="chat chat-start">
                                     <div class="chat-bubble chat-bubble-primary" x-text="chatbotMessage.message"></div>
                                 </div>
@@ -143,7 +143,8 @@
                                             <template x-for="proposition in chatbotMessage.options">
                                                 <button
                                                     class="btn btn-secondary w-full my-2"
-                                                    @click="goNext(proposition.next)"
+                                                    @click="goNext(proposition.next); disabled = true"
+                                                    x-bind:disabled="disabled"
                                                 >
                                                     <span x-text="proposition.label"></span>
                                                 </button>
@@ -156,7 +157,6 @@
                                 <template x-if="chatbotMessage.type === 'input'">
                                     <div class="chat chat-end">
                                         <div
-                                            x-data="{ disabled: false }"
                                             class="chat-bubble flex flex-col justify-between justify-center items-center">
                                             <input
                                                 class="input input-primary input-bordered w-full"

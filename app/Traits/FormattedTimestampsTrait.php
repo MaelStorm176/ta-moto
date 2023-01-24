@@ -15,9 +15,4 @@ trait FormattedTimestampsTrait
     {
         return Carbon::create($value)->format('d/m/Y H:i');
     }
-
-    public function getDeletedAtAttribute($value): string
-    {
-        return Carbon::create($value)->format('d/m/Y H:i');
-    }
 }

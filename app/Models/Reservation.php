@@ -23,4 +23,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class, 'reserved_by');
     }
+
+    public function getDateAttribute($value): string
+    {
+        return Carbon::create($value)->format('d/m/Y');
+    }
 }
