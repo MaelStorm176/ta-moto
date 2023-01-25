@@ -11,10 +11,19 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['Liberation Mono', ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                'spin-slow': 'spin 3s linear infinite',
+                'shine': 'shine 1s',
+            },
+            keyframes: {
+                shine: {
+                    "100%": { left: "125%" },
+                }
+            }
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('daisyui')],
+    plugins: [require('@tailwindcss/forms'), require('daisyui'), require('@tailwindcss/typography'), require('tailwind-scrollbar')],
 };
