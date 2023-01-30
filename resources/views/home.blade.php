@@ -11,10 +11,10 @@
             <div>
                 <h3 class="text-4xl font-bold">Low Rider™ El Diablo 2022</h3>
                 <p class="py-6">Dernier ajout à la collection Icons, le Low Rider El Diablo 2022 est une interprétation moderne de l’emblématique Harley-Davidson FXRT de 1983 et une représentation du mouvement custom que le modèle a initié.</p>
-                <button class="btn btn-primary uppercase">
-                    Voir la moto
+                <a class="btn btn-primary uppercase" href="{{ route("shop.index") }}">
+                    Voir les motos
                     <x-fas-arrow-right class="w-4 h-4 ml-2" />
-                </button>
+                </a>
             </div>
         </div>
     </div>

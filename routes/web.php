@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ShopController;
 use App\Models\Motorbike;
@@ -27,15 +28,9 @@ Route::get('/', static function () {
     return redirect()->route('home');
 });
 
-Route::get('/home', static function () {
-    $categories = MotorbikeCategory::all();
-    $motos = Motorbike::inRandomOrder()->limit(3)->get();
-    return view('home', compact('categories', 'motos'));
-})->name('home');
-
-Route::get('/dashboard', static function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::get('/chatbot/messages', [ChatbotController::class, 'messages'])->name('chatbot.messages');
 
@@ -53,6 +48,7 @@ Route::group(['prefix' => 'shop'], static function () {
 Route::group(['prefix' => 'forum', 'middleware' => 'auth'], static function () {
     Route::get('/', [ForumController::class, 'index'])->name('forum.index');
     Route::get('/channels/{channel}', [ForumController::class, 'showChannel'])->name('forum.showChannel');
+    Route::delete('/channels/{channel}', [ForumController::class, 'quitChannel'])->name('forum.quitChannel');
     Route::get('/channels/{channel}/messages/{message}', [ForumController::class, 'showMessage'])->name('forum.showMessage');
     Route::post('/channels/{channel}/messages', [ForumController::class, 'addMessage'])->name('forum.addMessage');
 });

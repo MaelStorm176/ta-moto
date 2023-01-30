@@ -10,9 +10,7 @@
         </div>
     </div>
 
-
-
-
+    <!-- Liste des utilisateurs connectés sur le côté gauche de l'écran ou au milieu-->
     <div
         class="md:flex md:items-center min-h-screen sm:flex-col sm:justify-center sm:pt-6"
         x-data="{ users: [] }"
@@ -20,37 +18,37 @@
         @channel-user-joined.window="users.push($event.detail)"
         @channel-user-left.window="users = users.filter(user => user.id !== $event.detail.id)"
     >
-        <!-- Liste des utilisateurs connectés sur le côté gauche de l'écran -->
-
         <div class="w-1/5 p-4">
-        <ul class="menu bg-neutral rounded-box">
-            <li class="menu-title flex flex-row justify-between p-2">
-                <span>Utilisateurs connectés</span>
-                <div><span x-text="users.length"></span>/{{ $channel->max_users }}</div>
-            </li>
-            <template
-                x-for="user in users"
-                :key="user.id"
-            >
-                <li>
-                    <a
-                        href="#"
-                        class="flex items-center p-2 space-x-2 rounded-box hover:bg-base-200"
-                    >
-                        <div class="avatar online">
-                            <div class="w-10 rounded-full">
-                                <img :src="`/storage/${user.avatar}`" alt="profile_picture">
-                            </div>
-                        </div>
-
-                        <span x-text="user.name"></span>
-                        <template x-if="user.is_admin">
-                            <span class="badge badge-primary justify-self-end">Admin</span>
-                        </template>
-                    </a>
+            <ul class="menu bg-neutral rounded-box">
+                <li class="menu-title flex flex-row justify-between p-2">
+                    <span>Utilisateurs connectés</span>
+                    <div>
+                        <span x-text="users.length"></span>/{{ $channel->max_users }}
+                    </div>
                 </li>
-            </template>
-        </ul>
+                <template
+                    x-for="user in users"
+                    :key="user.id"
+                >
+                    <li>
+                        <a
+                            href="#"
+                            class="flex items-center p-2 space-x-2 rounded-box hover:bg-base-200"
+                        >
+                            <div class="avatar online">
+                                <div class="w-10 rounded-full">
+                                    <img :src="`/storage/${user.avatar}`" alt="profile_picture">
+                                </div>
+                            </div>
+
+                            <span x-text="user.name"></span>
+                            <template x-if="user.is_admin">
+                                <span class="badge badge-primary justify-self-end">Admin</span>
+                            </template>
+                        </a>
+                    </li>
+                </template>
+            </ul>
         </div>
         <x-auth-card image="{{ asset('card_images/show-channel.jpg') }}">
             <x-slot name="logo">

@@ -12,12 +12,17 @@
                             @can('browse_admin')
                                 <x-navbar.item url="{{ route('voyager.login') }}" label="Administration" />
                             @endcan
+                            <x-navbar.item url="{{ route('forum.index') }}" label="Le Forum" />
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-navbar.item :url="route('logout')" label="{{ __('Log Out') }}" onclick="event.preventDefault();this.closest('form').submit();" />
+                                <x-navbar.item
+                                    class="bg-error"
+                                    :url="route('logout')"
+                                    label="{{ __('Log Out') }}"
+                                    onclick="event.preventDefault();this.closest('form').submit();"
+                                />
                             </form>
-                            <x-navbar.item url="{{ route('forum.index') }}" label="Le Forum" />
                         @endauth
                         @guest
                             <x-navbar.item url="{{ route('login') }}" label="Connexion" />
@@ -221,6 +226,17 @@
                     </div>
                 </div>
             @endforeach
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success shadow-lg absolute top-5 left-5 z-50 w-1/3">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{{ session('success') }}</span>
+                </div>
+            </div>
         @endif
 
     </body>
