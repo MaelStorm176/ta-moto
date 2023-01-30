@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
@@ -28,9 +29,12 @@ Route::get('/', static function () {
     return redirect()->route('home');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
-Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::group(['prefix' => 'home'], static function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+});
+
 
 Route::get('/chatbot/messages', [ChatbotController::class, 'messages'])->name('chatbot.messages');
 
@@ -56,6 +60,10 @@ Route::group(['prefix' => 'forum', 'middleware' => 'auth'], static function () {
 Route::group(['prefix' => 'notifications', 'middleware' => 'auth'], static function () {
     Route::get('/stream', [NotificationController::class, 'stream'])->name('notifications.stream');
     Route::post('{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
+});
+
+Route::group(['prefix' => 'communication', 'middleware' => 'auth'], static function () {
+    Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
 });
 
 Route::group(['prefix' => 'admin'], static function () {
