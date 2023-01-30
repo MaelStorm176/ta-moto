@@ -22,17 +22,27 @@ import Echo from 'laravel-echo';
 
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
-
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
-    forceTLS: false,
-    enabledTransports: ['ws', 'wss'],
-    disableStats: false,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-});
+if (import.meta.env.VITE_BROADCAST_DRIVER !== 'pusher') {
+    window.Echo = new Echo({
+        broadcaster: import.meta.env.VITE_BROADCAST_DRIVER,
+        key: import.meta.env.VITE_PUSHER_APP_KEY,
+        wsHost: window.location.hostname,
+        wsPort: 6001,
+        wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
+        forceTLS: false,
+        enabledTransports: ['ws', 'wss'],
+        disableStats: false,
+        cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    });
+}
+else{
+    window.Echo = new Echo({
+        broadcaster: import.meta.env.VITE_BROADCAST_DRIVER,
+        key: import.meta.env.VITE_PUSHER_APP_KEY,
+        cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+        forceTLS: true,
+        encrypted: true,
+    });
+}
 
 console.log('bootstrap.js loaded');
