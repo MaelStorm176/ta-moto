@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ShopController;
 use App\Models\Motorbike;
@@ -27,15 +29,15 @@ Route::get('/', static function () {
     return redirect()->route('home');
 });
 
-Route::get('/home', static function () {
-    $categories = MotorbikeCategory::all();
-    $motos = Motorbike::inRandomOrder()->limit(3)->get();
-    return view('home', compact('categories', 'motos'));
-})->name('home');
+Route::group(['prefix' => 'home'], static function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
+    Route::get('/privacy', [HomeController::class, 'privacy'])->name('privacy');
+    Route::get('/cookie-policy', [HomeController::class, 'cookies'])->name('cookie-policy');
+});
 
-Route::get('/dashboard', static function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/chatbot/messages', [ChatbotController::class, 'messages'])->name('chatbot.messages');
 
@@ -53,6 +55,7 @@ Route::group(['prefix' => 'shop'], static function () {
 Route::group(['prefix' => 'forum', 'middleware' => 'auth'], static function () {
     Route::get('/', [ForumController::class, 'index'])->name('forum.index');
     Route::get('/channels/{channel}', [ForumController::class, 'showChannel'])->name('forum.showChannel');
+    Route::delete('/channels/{channel}', [ForumController::class, 'quitChannel'])->name('forum.quitChannel');
     Route::get('/channels/{channel}/messages/{message}', [ForumController::class, 'showMessage'])->name('forum.showMessage');
     Route::post('/channels/{channel}/messages', [ForumController::class, 'addMessage'])->name('forum.addMessage');
 });
@@ -60,6 +63,16 @@ Route::group(['prefix' => 'forum', 'middleware' => 'auth'], static function () {
 Route::group(['prefix' => 'notifications', 'middleware' => 'auth'], static function () {
     Route::get('/stream', [NotificationController::class, 'stream'])->name('notifications.stream');
     Route::post('{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
+});
+
+Route::group(['prefix' => 'communication', 'middleware' => 'auth'], static function () {
+    Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
+    Route::get('/{communication}/messages', [CommunicationController::class, 'show'])->middleware('communication.accepted')->name('communication.show');
+    Route::post('/{communication}/messages', [CommunicationController::class, 'sendMessage'])->middleware('communication.accepted')->name('communication.sendMessage');
+    Route::post('/{receveiver}/send', [CommunicationController::class, 'sendRequest'])->name('communication.sendRequest');
+    Route::get('/{communication}/accept', [CommunicationController::class, 'acceptRequest'])->name('communication.acceptRequest');
+    Route::get('/{communication}/refuse', [CommunicationController::class, 'refuseRequest'])->name('communication.refuseRequest');
+
 });
 
 Route::group(['prefix' => 'admin'], static function () {

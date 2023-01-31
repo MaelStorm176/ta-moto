@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -48,4 +49,14 @@ class User extends \TCG\Voyager\Models\User
         'name',
         'avatar',
     ];
+
+    public function communications(): HasMany
+    {
+        return $this->hasMany(Communication::class, 'receiver_id');
+    }
+
+    public function sentCommunications(): HasMany
+    {
+        return $this->hasMany(Communication::class, 'sender_id');
+    }
 }

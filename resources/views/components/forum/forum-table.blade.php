@@ -17,6 +17,13 @@
             <tr>
                 <td>
                     <a href="{{ route('forum.showChannel', $forum) }}" class="btn btn-primary">Rejoindre</a>
+                    @if($forum->users()->where('user_id', auth()->id())->exists())
+                        <form action="{{ route('forum.quitChannel', $forum) }}" method="post" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-error">Quitter</button>
+                        </form>
+                    @endif
                 </td>
                 <td>
                     <a href="{{ route('forum.showChannel', $forum) }}">{{ $forum->title }}</a>

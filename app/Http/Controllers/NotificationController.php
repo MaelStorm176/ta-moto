@@ -12,6 +12,8 @@ class NotificationController extends Controller
         $response->setCallback(function () {
             $notifications = Notification::query()
                 ->where('expired_at', '>', now())
+                ->where('user_id', auth()->id())
+                ->orWhere('user_id', null)
                 ->whereDoesntHave('readers', static function ($query) {
                     $query->where('user_id', auth()->id());
                 })
@@ -19,7 +21,7 @@ class NotificationController extends Controller
                 ->get();
             foreach ($notifications as $notification) {
                 echo 'event: notification' . PHP_EOL;
-                echo 'data: ' . json_encode($notification) . PHP_EOL;
+                echo 'data: ' . json_encode($notification, JSON_THROW_ON_ERROR) . PHP_EOL;
                 echo PHP_EOL;
             }
             ob_flush();
