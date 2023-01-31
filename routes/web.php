@@ -64,6 +64,10 @@ Route::group(['prefix' => 'notifications', 'middleware' => 'auth'], static funct
 
 Route::group(['prefix' => 'communication', 'middleware' => 'auth'], static function () {
     Route::get('/', [CommunicationController::class, 'index'])->name('communication.index');
+    Route::get('/{communication}/messages', [CommunicationController::class, 'show'])->middleware('communication.accepted')->name('communication.show');
+    Route::post('/{communication}/messages', [CommunicationController::class, 'sendMessage'])->middleware('communication.accepted')->name('communication.sendMessage');
+    Route::post('/{receveiver}/send', [CommunicationController::class, 'sendRequest'])->name('communication.sendRequest');
+
 });
 
 Route::group(['prefix' => 'admin'], static function () {

@@ -52,6 +52,7 @@ class ForumController extends Controller
             'user_id' => auth()->id(),
             'message' => $request->get('message')
         ]);
+
         broadcast(new ForumChannelMessagePosted($message));
 
         //test if ajax request
