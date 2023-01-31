@@ -52,6 +52,7 @@ class ForumController extends Controller
             'user_id' => auth()->id(),
             'message' => $request->get('message')
         ]);
+
         broadcast(new ForumChannelMessagePosted($message));
 
         //test if ajax request
@@ -62,7 +63,12 @@ class ForumController extends Controller
                 'data' => $message
             ]);
         }
-
         return back();
+    }
+
+    public function quitChannel(ForumChannel $channel): RedirectResponse
+    {
+        $channel->users()->where('user_id', auth()->id())->delete();
+        return redirect()->route('forum.index')->with('success', 'Vous avez bien quitté le channel');
     }
 }

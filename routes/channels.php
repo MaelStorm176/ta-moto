@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Communication;
 use App\Models\ForumChannel;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -19,10 +20,25 @@ Broadcast::channel('App.Models.User.{id}', static function ($user, $id) {
 });
 
 Broadcast::channel('ForumChannel.{channel}', static function ($user, ForumChannel $channel) {
-    return [
-        'id' => $user->id,
-        'name' => $user->name,
-        'avatar' => $user->avatar,
-        'is_admin' => $user->role->id === 1,
-    ];
+    if ($channel->users()->where('user_id', $user->id)->exists()) {
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'avatar' => $user->avatar,
+            'is_admin' => $user->role->id === 1,
+        ];
+    }
+    return false;
+});
+
+Broadcast::channel('Communication.{communication}', static function ($user, Communication $communication) {
+    if ($communication->sender()->id === $user->id || $communication->receiver()->id === $user->id) {
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'avatar' => $user->avatar,
+            'is_admin' => $user->role->id === 1,
+        ];
+    }
+    return false;
 });

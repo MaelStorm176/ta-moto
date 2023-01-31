@@ -73,7 +73,7 @@ class ChatbotController extends Controller
                 [
                     'type' => 'less_than',
                     'value' => 10000,
-                    'next' => 'check_disponibility_maintenance',
+                    'next' => 'confirm_maintenance',
                 ],
                 [
                     'type' => 'more_or_equal',

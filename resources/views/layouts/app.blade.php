@@ -12,12 +12,18 @@
                             @can('browse_admin')
                                 <x-navbar.item url="{{ route('voyager.login') }}" label="Administration" />
                             @endcan
+                            <x-navbar.item url="{{ route('forum.index') }}" label="Le Forum" />
+                            <x-navbar.item url="{{ route('communication.index') }}" label="Conseillers et Utilisateurs" />
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-navbar.item :url="route('logout')" label="{{ __('Log Out') }}" onclick="event.preventDefault();this.closest('form').submit();" />
+                                <x-navbar.item
+                                    class="bg-error"
+                                    :url="route('logout')"
+                                    label="{{ __('Log Out') }}"
+                                    onclick="event.preventDefault();this.closest('form').submit();"
+                                />
                             </form>
-                            <x-navbar.item url="{{ route('forum.index') }}" label="Le Forum" />
                         @endauth
                         @guest
                             <x-navbar.item url="{{ route('login') }}" label="Connexion" />
@@ -32,9 +38,6 @@
                 </x-slot:center>
 
                 <x-slot:end>
-                    <button class="btn btn-ghost btn-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    </button>
 
                     @auth
                     <div
@@ -60,7 +63,7 @@
                             tabindex="0"
                             class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-base-content max-h-[30rem] overflow-y-auto"
                         >
-                            <template x-if="notifications.length > 0" x-for="notification in notifications">
+                            <template x-for="notification in notifications">
                                 <li>
                                     <a
                                         x-text="notification.title"
@@ -221,6 +224,17 @@
                     </div>
                 </div>
             @endforeach
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success shadow-lg absolute top-5 left-5 z-50 w-1/3">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{{ session('success') }}</span>
+                </div>
+            </div>
         @endif
 
     </body>
