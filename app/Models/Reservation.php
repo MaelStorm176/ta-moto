@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
 {
-    //use FormattedTimestampsTrait;
-
     protected $table = 'reservations';
     protected $fillable = [
         'date',
@@ -22,10 +20,5 @@ class Reservation extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reserved_by');
-    }
-
-    public function getDateAttribute($value): string
-    {
-        return Carbon::create($value)->format('d/m/Y');
     }
 }
