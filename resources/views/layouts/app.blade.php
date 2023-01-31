@@ -13,6 +13,7 @@
                                 <x-navbar.item url="{{ route('voyager.login') }}" label="Administration" />
                             @endcan
                             <x-navbar.item url="{{ route('forum.index') }}" label="Le Forum" />
+                            <x-navbar.item url="{{ route('communication.index') }}" label="Conseillers et Utilisateurs" />
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

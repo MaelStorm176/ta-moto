@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
 {
-    use FormattedTimestampsTrait;
+    //use FormattedTimestampsTrait;
 
     protected $table = 'reservations';
     protected $fillable = [

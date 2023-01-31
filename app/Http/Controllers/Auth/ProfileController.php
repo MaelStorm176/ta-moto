@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Communication;
 use App\Models\ForumChannel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class ProfileController extends Controller
             ->where('deleted_at', null)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+
         return view('auth.profile', compact('forums'));
     }
 

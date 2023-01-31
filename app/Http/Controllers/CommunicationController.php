@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\CommunicationMessagePosted;
 use App\Models\Communication;
+use App\Models\ForumChannel;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -12,15 +14,42 @@ use TCG\Voyager\Models\Role;
 
 class CommunicationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $consultant_role = Role::where('name', 'consultant')->first();
-        $consultants = User::where('role_id', $consultant_role->id)->paginate(10,[
-            'id',
-            'name',
-            'avatar',
-            'email',
-        ]);
+        $search = $request->get('search');
+        $consultant_checked = $request->get('consultant');
+        $incoming_checked = $request->get('incoming');
+        $outgoing_checked = $request->get('outgoing');
+        if ($consultant_checked) {
+            $consultant_role = Role::where('name', 'consultant')->first();
+        }else{
+            $consultant_role = Role::where('name', 'user')->first();
+        }
+        $consultants = User::query()
+            ->where('role_id', $consultant_role->id)
+            ->when($search, static function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            });
+
+        if ($outgoing_checked && !$incoming_checked) {
+            $consultants->whereHas('communications', static function ($query) {
+                $query->where('sender_id', auth()->user()->id);
+            });
+        }elseif ($outgoing_checked && $incoming_checked) {
+            $consultants->whereHas('communications', static function ($query) {
+                $query->where('sender_id', auth()->user()->id);
+            })->orWhereHas('sentCommunications', static function ($query) {
+                $query->where('receiver_id', auth()->user()->id);
+            });
+        }elseif (!$outgoing_checked && $incoming_checked) {
+            $consultants->whereHas('sentCommunications', static function ($query) {
+                $query->where('receiver_id', auth()->user()->id);
+            });
+        }
+
+
+
+        $consultants = $consultants->paginate(10);
         return view('communication.index', compact('consultants'));
     }
 
@@ -34,19 +63,37 @@ class CommunicationController extends Controller
             'receiver_id' => $receveiver->id,
             'accepted' => false,
         ]);
-        return redirect()->route('communication.index')->with('success', 'Demande envoyée avec succès');
+
+        $notification = new Notification();
+        $notification->user_id = $receveiver->id;
+        $notification->title = 'Nouvelle demande de communication';
+        $notification->content = 'Vous avez une nouvelle demande de communication de la part de ' . auth()->user()->name;
+        $notification->expired_at = now()->addDays(10);
+        $notification->save();
+
+        return back()->with('success', 'Demande envoyée avec succès');
     }
 
-    public function acceptOrRefuseRequest(Request $request, Communication $communication): RedirectResponse
+    public function acceptRequest(Communication $communication): RedirectResponse
     {
-        $request->validate([
-            'accepted' => 'required|boolean',
-        ]);
-
+        if ($communication->receiver_id !== auth()->user()->id) {
+            return redirect()->route('communication.index')->with('error', 'Vous n\'êtes pas autorisé à accepter cette demande');
+        }
         $communication->update([
-            'accepted' => $request->get('accepted'),
+            'accepted' => true,
         ]);
-        return redirect()->route('communication.index')->with('success', 'Demande acceptée avec succès');
+        return back()->with('success', 'Demande acceptée avec succès');
+    }
+
+    public function refuseRequest(Communication $communication): RedirectResponse
+    {
+        if ($communication->receiver_id !== auth()->user()->id) {
+            return redirect()->route('communication.index')->with('error', 'Vous n\'êtes pas autorisé à refuser cette demande');
+        }
+        $communication->update([
+            'accepted' => false,
+        ]);
+        return back()->with('success', 'Demande refusée avec succès');
     }
 
     public function show(Communication $communication)

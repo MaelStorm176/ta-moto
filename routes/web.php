@@ -70,6 +70,8 @@ Route::group(['prefix' => 'communication', 'middleware' => 'auth'], static funct
     Route::get('/{communication}/messages', [CommunicationController::class, 'show'])->middleware('communication.accepted')->name('communication.show');
     Route::post('/{communication}/messages', [CommunicationController::class, 'sendMessage'])->middleware('communication.accepted')->name('communication.sendMessage');
     Route::post('/{receveiver}/send', [CommunicationController::class, 'sendRequest'])->name('communication.sendRequest');
+    Route::get('/{communication}/accept', [CommunicationController::class, 'acceptRequest'])->name('communication.acceptRequest');
+    Route::get('/{communication}/refuse', [CommunicationController::class, 'refuseRequest'])->name('communication.refuseRequest');
 
 });
 
