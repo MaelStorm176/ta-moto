@@ -39,4 +39,19 @@ class HomeController extends Controller
         return view('company.contact');
     }
 
+    public function terms() : View
+    {
+        return view('company.terms');
+    }
+
+    public function privacy() : View
+    {
+        return view('company.privacy');
+    }
+
+    public function cookies() : View
+    {
+        return view('company.cookies');
+    }
+
 }

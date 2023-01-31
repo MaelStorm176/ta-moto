@@ -33,6 +33,9 @@ Route::group(['prefix' => 'home'], static function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', [HomeController::class, 'about'])->name('about');
     Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
+    Route::get('/privacy', [HomeController::class, 'privacy'])->name('privacy');
+    Route::get('/cookie-policy', [HomeController::class, 'cookies'])->name('cookie-policy');
 });
 
 

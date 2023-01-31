@@ -7,23 +7,14 @@
         <p>TAMOTO Industries Ltd.<br/>Spécialiste de la vente de moto en ligne depuis 1992</p>
     </div>
     <div>
-        <span class="footer-title">Services</span>
-        <a class="link link-hover">Branding</a>
-        <a class="link link-hover">Design</a>
-        <a class="link link-hover">Marketing</a>
-        <a class="link link-hover">Advertisement</a>
-    </div>
-    <div>
         <span class="footer-title">A propos de nous</span>
-        <a class="link link-hover">Notre société</a>
-        <a class="link link-hover">Contact</a>
-        <a class="link link-hover">Jobs</a>
-        <a class="link link-hover">Press kit</a>
+        <a class="link link-hover" href="{{ route('about') }}">Notre société</a>
+        <a class="link link-hover" href="{{ route('contact') }}">Contactez nous</a>
     </div>
     <div>
         <span class="footer-title">Legal</span>
-        <a class="link link-hover">Terms of use</a>
-        <a class="link link-hover">Privacy policy</a>
-        <a class="link link-hover">Cookie policy</a>
+        <a class="link link-hover" href="{{ route('terms') }}">Conditions d'utilisation</a>
+        <a class="link link-hover" href="{{ route('privacy') }}">Politique de confidentialité</a>
+        <a class="link link-hover" href="{{ route('cookie-policy') }}">Politique des cookies</a>
     </div>
 </footer>
