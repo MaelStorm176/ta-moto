@@ -17,33 +17,41 @@ Veillez à utiliser docker pour l'intégralité du projet
 
 #### Installation et lancement du projet
 ```bash
-  make start
   make install
+  make start
 ```
 
 #### Construction de la base de données
+
+Il faut exécuter le script save_db_ta_moto.sql se trouvant dans le dossier "database" pour construire la base de données car les migrations ne sont pas fonctionnelles avec Laravel Voyager
+
+Ensuite il faut seed la base de données avec les commandes suivantes :
+
 ```bash
-  make build-db
+  make seed
 ```
 
-#### Build des assets
+#### Compte administrateur
+
+Pour accéder au panel d'administration, il faut posseder un compte administrateur, par défaut un compte est créé avec les identifiants suivants :
+
 ```bash
-  make npm-build
-```
-OU
-```bash
-  make npm-dev
-```
-OU
-```bash
-  make npm-watch
-```
-#### Importation des données de Marmiton (optionnel)
-```bash
-  make marmiton
+  email : admin@admin.com
+  password : password
 ```
 
+#### Pusher / Laravel Echo / Laravel Websockets
 
+Si vous souhaitez utiliser les fonctionnalités de chat en temps réel, vous devrez créer un compte sur [Pusher](https://pusher.com/) et renseigner les clés d'API dans le fichier .env
+
+Si vous ne souhaitez pas utiliser ces fonctionnalités, vous pouvez alors utiliser la commande suivante pour démarrer un serveur de websockets en local :
+
+```bash
+  make websockets
+```
+
+Veillez à avoir instancié la variable d'environnement APP_URL avec l'adresse de votre serveur local
+Veillez à avoir instancié la variable d'environnement BROADCAST_DRIVER avec la valeur "local" si vous utilisez le serveur de websockets local
 
 ## Variables d'environnement
 

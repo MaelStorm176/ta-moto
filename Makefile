@@ -30,3 +30,5 @@ migrate: ## Run the migrations
 	sail artisan migrate
 seed: ## Run the seeders
 	sail artisan db:seed --class=ImageSeeder
+websocket: ## Start the websocket server
+	sail artisan websockets:serve
